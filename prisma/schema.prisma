@@ -1,0 +1,123 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String?
+  passwordHash String?
+  role         Role      @default(CUSTOMER)
+  addresses    Address[]
+  orders       Order[]
+  createdAt    DateTime  @default(now())
+}
+
+model Address {
+  id        String  @id @default(cuid())
+  userId    String
+  user      User    @relation(fields: [userId], references: [id])
+  line1     String
+  line2     String?
+  suburb    String
+  state     String
+  postcode  String
+  country   String  @default("AU")
+  isDefault Boolean @default(false)
+}
+
+model Product {
+  id          String      @id @default(cuid())
+  sku         String      @unique
+  title       String
+  slug        String      @unique
+  description String
+  priceCents  Int
+  imageUrls   String[]
+  weightGrams Int
+  lengthCm    Float
+  widthCm     Float
+  heightCm    Float
+  active      Boolean     @default(true)
+  inventory   Inventory?
+  orderItems  OrderItem[]
+  createdAt   DateTime    @default(now())
+}
+
+model Inventory {
+  id               String   @id @default(cuid())
+  productId        String   @unique
+  product          Product  @relation(fields: [productId], references: [id])
+  quantityOnHand   Int      @default(0)
+  quantityReserved Int      @default(0)
+  updatedAt        DateTime @updatedAt
+}
+
+model Channel {
+  id       String           @id @default(cuid())
+  name     String           @unique
+  listings ChannelListing[]
+}
+
+model ChannelListing {
+  id           String    @id @default(cuid())
+  channelId    String
+  channel      Channel   @relation(fields: [channelId], references: [id])
+  productId    String
+  externalId   String
+  lastSyncedAt DateTime?
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  userId          String
+  user            User        @relation(fields: [userId], references: [id])
+  status          OrderStatus @default(PENDING)
+  totalCents      Int
+  stripePaymentId String?
+  items           OrderItem[]
+  shipment        Shipment?
+  createdAt       DateTime    @default(now())
+}
+
+model OrderItem {
+  id         String  @id @default(cuid())
+  orderId    String
+  order      Order   @relation(fields: [orderId], references: [id])
+  productId  String
+  product    Product @relation(fields: [productId], references: [id])
+  quantity   Int
+  priceCents Int // snapshot of Product.priceCents at time of purchase
+}
+
+model Shipment {
+  id                String    @id @default(cuid())
+  orderId           String    @unique
+  order             Order     @relation(fields: [orderId], references: [id])
+  carrier           String    @default("AusPost")
+  trackingNumber    String?
+  chargeableWeightG Int // max(dead weight, cubic weight), calculated at checkout
+  labelUrl          String?
+  shippedAt         DateTime?
+  deliveredAt       DateTime?
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  PACKED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
