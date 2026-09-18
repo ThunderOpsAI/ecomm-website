@@ -1,7 +1,8 @@
 import os
 from PIL import Image
 
-fitted_dir = '/Users/thunderopsai/Documents/Workspace/01_Projects/ecomm-website/Mousepads/fitted_images'
+script_dir = os.path.dirname(os.path.abspath(__file__))
+fitted_dir = os.path.join(script_dir, 'fitted_images')
 target_w, target_h = 354, 414
 target_ratio = target_w / target_h
 

@@ -50,3 +50,23 @@ next-env.d.ts
 .vscode/
 *.swp
 *.swo
+
+# Python / AI Environment
+ai-tools/.venv/
+.venv/
+__pycache__/
+*.pyc
+
+# AI Model Weights
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+*.bin
+*.onnx
+
+# AI Inference Results & Temp Files
+ai-tools/Real-ESRGAN/results/
+ai-tools/GFPGAN/results/
+ai-tools/ComfyUI/output/
+ai-tools/ComfyUI/temp/
