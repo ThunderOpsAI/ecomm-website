@@ -1,0 +1,58 @@
+[
+  {
+    "shot": "cutout_white",
+    "method": "deterministic",
+    "score": 0.991,
+    "status": "PASS",
+    "notes": "Perfect fidelity."
+  },
+  {
+    "shot": "infographic",
+    "method": "deterministic",
+    "score": 0.404,
+    "status": "NEEDS_HUMAN",
+    "notes": "Fails fidelity because find_pad_quad fails on 240 grey background."
+  },
+  {
+    "shot": "split_showcase",
+    "method": "deterministic",
+    "score": 0.382,
+    "status": "NEEDS_HUMAN",
+    "notes": "Fails fidelity because it is a crop and find_pad_quad cannot find full boundary."
+  },
+  {
+    "shot": "fabric_macro",
+    "method": "script crop",
+    "score": 0.347,
+    "status": "NEEDS_HUMAN",
+    "notes": "Fails fidelity because it is a cropped section; no full quad available."
+  },
+  {
+    "shot": "lifestyle",
+    "method": "composite",
+    "score": 0.322,
+    "status": "NEEDS_HUMAN",
+    "notes": "Fidelity tool find_pad_quad fails on scene background."
+  },
+  {
+    "shot": "base_reveal",
+    "method": "composite",
+    "score": 0.292,
+    "status": "NEEDS_HUMAN",
+    "notes": "Fidelity tool find_pad_quad fails on scene background."
+  },
+  {
+    "shot": "floating_packshot",
+    "method": "composite",
+    "score": 0.276,
+    "status": "NEEDS_HUMAN",
+    "notes": "Fidelity tool find_pad_quad fails on scene background."
+  },
+  {
+    "shot": "edge_macro",
+    "method": "composite",
+    "score": 0.339,
+    "status": "NEEDS_HUMAN",
+    "notes": "Fidelity tool find_pad_quad fails on scene background."
+  }
+]

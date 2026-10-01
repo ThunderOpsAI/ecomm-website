@@ -1,0 +1,65 @@
+[
+    {
+        "shot": "lifestyle",
+        "method": "composite",
+        "fidelity_score": 0.218,
+        "status": "FAIL (NEEDS_HUMAN)",
+        "notes": "ComfyUI generation failed (capacity); used mock plain scene instead."
+    },
+    {
+        "shot": "base_reveal",
+        "method": "composite",
+        "fidelity_score": 0.207,
+        "status": "FAIL (NEEDS_HUMAN)",
+        "notes": "ComfyUI generation failed (capacity); used mock plain scene instead."
+    },
+    {
+        "shot": "floating_packshot",
+        "method": "composite",
+        "fidelity_score": 0.185,
+        "status": "FAIL (NEEDS_HUMAN)",
+        "notes": "ComfyUI generation failed (capacity); used mock plain scene instead."
+    },
+    {
+        "shot": "edge_macro",
+        "method": "composite",
+        "fidelity_score": 0.22,
+        "status": "FAIL (NEEDS_HUMAN)",
+        "notes": "ComfyUI generation failed (capacity); used mock plain scene instead."
+    },
+    {
+        "shot": "cutout",
+        "method": "deterministic",
+        "fidelity_score": "N/A",
+        "status": "PASS",
+        "notes": ""
+    },
+    {
+        "shot": "cutout_white",
+        "method": "deterministic",
+        "fidelity_score": "N/A",
+        "status": "PASS",
+        "notes": ""
+    },
+    {
+        "shot": "infographic",
+        "method": "deterministic",
+        "fidelity_score": "N/A",
+        "status": "PASS",
+        "notes": ""
+    },
+    {
+        "shot": "fabric_macro",
+        "method": "deterministic",
+        "fidelity_score": "N/A",
+        "status": "PASS",
+        "notes": ""
+    },
+    {
+        "shot": "split_showcase",
+        "method": "deterministic",
+        "fidelity_score": "N/A",
+        "status": "PASS",
+        "notes": ""
+    }
+]
