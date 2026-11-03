@@ -18,6 +18,12 @@ const shippingQuoteSchema = z.object({
   ).min(1, "At least one item is required in cart"),
 });
 
+/**
+ * Real-time domestic shipping quote endpoint.
+ *
+ * Resolves dimensional metadata for cart items and queries the Australia Post
+ * rate engine to return calculated Regular and Express options.
+ */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();

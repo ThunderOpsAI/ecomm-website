@@ -51,22 +51,29 @@ next-env.d.ts
 *.swp
 *.swo
 
-# Python / AI Environment
-ai-tools/.venv/
+# Python Environment
 .venv/
 __pycache__/
 *.pyc
 
-# AI Model Weights
+# Large Binary Weights & Archive Blobs
 *.pth
 *.pt
 *.ckpt
 *.safetensors
 *.bin
 *.onnx
+*.zip
+*.psd
 
-# AI Inference Results & Temp Files
-ai-tools/Real-ESRGAN/results/
-ai-tools/GFPGAN/results/
-ai-tools/ComfyUI/output/
-ai-tools/ComfyUI/temp/
+# Local Processing Tooling & Caches
+ai-tools/
+.code-review-graph/
+
+# Agent & Assistant Configurations
+AGENTS.md
+CLAUDE.md
+.agents/
+.gemini/
+.claude/
+.cursor/

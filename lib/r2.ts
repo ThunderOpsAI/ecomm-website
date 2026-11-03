@@ -1,3 +1,10 @@
+/**
+ * Cloudflare R2 Object Storage client.
+ *
+ * R2 is S3-compatible, allowing direct browser-to-bucket uploads via presigned URLs.
+ * This offloads heavy image payloads from Next.js serverless functions and eliminates
+ * egress bandwidth fees.
+ */
 import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
@@ -17,13 +24,19 @@ export const r2Client = new S3Client({
 });
 
 /**
- * Generates a presigned PUT URL for direct browser-to-R2 upload
+ * Generates a presigned PUT URL for direct browser-to-R2 upload.
+ *
+ * @param fileName - Original filename from client
+ * @param contentType - MIME type of the uploaded asset (e.g. image/jpeg)
+ * @param expiresInSeconds - Token lifetime; defaults to 1 hour
+ * @returns Upload endpoint, public read URL, and internal R2 storage key
  */
 export async function generatePresignedUploadUrl(
   fileName: string,
   contentType: string,
   expiresInSeconds: number = 3600
 ): Promise<{ uploadUrl: string; publicUrl: string; key: string }> {
+  // Sanitize filename to prevent malicious S3 path traversal or unsupported URI characters
   const sanitizedFileName = fileName.replace(/[^a-zA-Z0-9._-]/g, "_");
   const uniqueKey = `products/${Date.now()}-${sanitizedFileName}`;
 
@@ -47,7 +60,7 @@ export async function generatePresignedUploadUrl(
 }
 
 /**
- * Deletes an object from Cloudflare R2
+ * Deletes an object from Cloudflare R2 by its storage key.
  */
 export async function deleteR2Object(key: string): Promise<void> {
   const command = new DeleteObjectCommand({

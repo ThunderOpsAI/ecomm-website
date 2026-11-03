@@ -1,19 +1,27 @@
+"""
+Mousepad Artwork Aspect Ratio Fitting Tool
+
+Utility script for cropping and scaling raw mousepad artwork into standard
+manufacturing print aspect ratios (354x414 mm / target ratio ~0.855).
+Preserves center alignment and saves optimized print-ready outputs to fitted_images/.
+"""
+
 import os
 from PIL import Image
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
-fitted_dir = os.path.join(script_dir, 'fitted_images')
+fitted_dir = os.path.join(script_dir, "fitted_images")
 target_w, target_h = 354, 414
 target_ratio = target_w / target_h
 
 for filename in os.listdir(fitted_dir):
-    if filename.startswith('Gemini_') and filename.lower().endswith(('.jpg', '.jpeg', '.png')):
+    if filename.lower().endswith((".jpg", ".jpeg", ".png")):
         filepath = os.path.join(fitted_dir, filename)
         img = Image.open(filepath)
         w, h = img.size
-        
+
         current_ratio = w / h
-        
+
         if current_ratio < target_ratio:
             # Image is too tall, crop height
             new_w = w
@@ -22,12 +30,12 @@ for filename in os.listdir(fitted_dir):
             # Image is too wide, crop width
             new_h = h
             new_w = int(h * target_ratio)
-            
+
         left = (w - new_w) / 2
         top = (h - new_h) / 2
         right = (w + new_w) / 2
         bottom = (h + new_h) / 2
-        
+
         cropped_img = img.crop((left, top, right, bottom))
         # Save over the original in fitted_images
         cropped_img.save(filepath, quality=95)

@@ -27,6 +27,16 @@ const checkoutSchema = z.object({
   cancelUrl: z.string().url().optional(),
 });
 
+/**
+ * Checkout session initialization handler.
+ *
+ * Implements a two-phase stock locking protocol:
+ * 1. Pre-validation: checks available quantity (quantityOnHand - quantityReserved).
+ * 2. Freight calculation: computes volumetric vs dead weight according to AusPost metrics.
+ * 3. Atomic reservation: enters an interactive DB transaction to increment `quantityReserved`
+ *    and record the pending Order before exposing customer to payment gateway.
+ * 4. Payment session: generates Stripe Checkout session bound to the created order ID.
+ */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();

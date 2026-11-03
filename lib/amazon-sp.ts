@@ -1,6 +1,10 @@
 /**
- * Amazon Selling Partner API (SP-API) Client Wrapper
- * Handles authentication (LWA token exchange) and inventory patch updates.
+ * Amazon Selling Partner API (SP-API) client.
+ *
+ * Updates merchant inventory using the Listings Items API (2021-08-01 schema).
+ * Authenticates via Login with Amazon (LWA) OAuth refresh tokens.
+ * Falls back to simulation mode when API credentials are absent, preventing
+ * third-party outages from blocking local checkout fulfillment.
  */
 
 export interface AmazonInventoryUpdateParams {

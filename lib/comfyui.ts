@@ -1,3 +1,16 @@
+/**
+ * ComfyUI Headless Execution Client
+ *
+ * Provides a typed HTTP client for communicating with a local or remote ComfyUI instance.
+ * Dispatches image generation and restoration workflow graphs via the /prompt endpoint,
+ * polls execution status via the /history endpoint, and retrieves rendered asset URLs.
+ *
+ * Typical workflow:
+ * 1. queuePrompt(workflowGraph) -> returns promptId
+ * 2. waitForCompletion(promptId) -> polls until job completes and returns output image filenames
+ * 3. getImageUrl(filename) -> generates direct asset URL for display or downstream ingestion
+ */
+
 export class ComfyUIClient {
   private baseUrl: string;
 

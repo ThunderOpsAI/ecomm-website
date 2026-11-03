@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+"""
+Mousepad Computer Vision & Asset Rectification Tools.
+
+Extracts mousepad bounding quads from raw photos, computes perspective homography
+transforms, and rectifies skewed perspective into orthogonal e-commerce product renders.
+"""
 import argparse
 import sys
 import os

@@ -1,6 +1,9 @@
 /**
- * eBay REST API Client Wrapper
- * Handles OAuth2 client credentials/user token exchange and inventory quantity updates.
+ * eBay REST Inventory API client.
+ *
+ * Implements the Sell Inventory API specification (v1/inventory_item).
+ * In staging/dev environments lacking live OAuth credentials, operations fail open
+ * to simulation mode to prevent blocking core storefront order fulfillment.
  */
 
 export interface EbayInventoryUpdateParams {

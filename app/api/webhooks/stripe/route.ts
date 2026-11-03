@@ -6,6 +6,16 @@ import type Stripe from "stripe";
 
 export const dynamic = "force-dynamic";
 
+/**
+ * Stripe webhook lifecycle handler.
+ *
+ * Reconciles asynchronous payment confirmations:
+ * - `checkout.session.completed`: Marks Order PAID, decrements physical stock on hand,
+ *   releases the temporary reservation hold, and triggers multichannel inventory sync (Amazon/eBay).
+ * - `checkout.session.expired`: Releases reservation locks if customer abandons the checkout.
+ *
+ * Verifies raw cryptographic signatures using the Stripe Webhook Secret to reject forged payloads.
+ */
 export async function POST(req: NextRequest) {
   const body = await req.text();
   const signature = req.headers.get("stripe-signature");
