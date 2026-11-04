@@ -1,0 +1,8 @@
+{
+  "name": "MatStudio",
+  "description": "Premium Australian cloth-top natural-rubber gaming mouse pads and desk mats featuring Japandi minimalist ink-wash art, anime-inspired collector editions, and ergonomic 3D wrist supports.",
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ],
+  "permissions": []
+}

@@ -23,7 +23,7 @@ export class ComfyUIClient {
    * @param promptJson The ComfyUI API JSON format (exported from the UI)
    * @returns The prompt_id which can be used to check status
    */
-  async queuePrompt(promptJson: Record<string, any>): Promise<string> {
+  async queuePrompt(promptJson: Record<string, unknown>): Promise<string> {
     const response = await fetch(`${this.baseUrl}/prompt`, {
       method: 'POST',
       headers: {
@@ -45,7 +45,7 @@ export class ComfyUIClient {
    * @param promptId The ID returned by queuePrompt
    * @returns The history object if finished, or null if still processing
    */
-  async getHistory(promptId: string): Promise<any | null> {
+  async getHistory(promptId: string): Promise<Record<string, unknown> | null> {
     const response = await fetch(`${this.baseUrl}/history/${promptId}`);
     
     if (!response.ok) {
@@ -77,16 +77,16 @@ export class ComfyUIClient {
    */
   async waitForCompletion(promptId: string, pollIntervalMs = 2000, maxAttempts = 60): Promise<string[]> {
     for (let i = 0; i < maxAttempts; i++) {
-      const history = await this.getHistory(promptId);
+      const history = await this.getHistory(promptId) as { outputs?: Record<string, { images?: { filename: string }[] }> } | null;
       if (history) {
         // Extract output filenames from the history object
-        const outputs = history.outputs;
-        let filenames: string[] = [];
+        const outputs = history.outputs || {};
+        const filenames: string[] = [];
         
         for (const nodeId in outputs) {
           const nodeOutput = outputs[nodeId];
           if (nodeOutput.images) {
-            filenames.push(...nodeOutput.images.map((img: any) => img.filename));
+            filenames.push(...nodeOutput.images.map((img) => img.filename));
           }
         }
         return filenames;
