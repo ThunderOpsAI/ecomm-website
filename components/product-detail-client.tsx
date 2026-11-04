@@ -15,6 +15,7 @@ import {
 import { Product, formatAud } from "@/src/data/products";
 import { useCart } from "@/lib/cart-context";
 import { ProductCard } from "@/components/product-card";
+import { DeskSizeVisualizer } from "@/components/desk-size-visualizer";
 
 interface ProductDetailClientProps {
   product: Product;
@@ -240,7 +241,12 @@ export function ProductDetailClient({
                 <span className="font-bold uppercase tracking-wider text-[#14161b]">
                   Select Dimension
                 </span>
-                <span className="text-[#7b8192] font-mono">{selectedVariant.dimensions}</span>
+                <a
+                  href="#desk-visualizer"
+                  className="text-[#d9381e] hover:underline font-semibold flex items-center gap-1"
+                >
+                  Desk Visualizer ↓
+                </a>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -488,6 +494,20 @@ export function ProductDetailClient({
           </div>
         </div>
       </div>
+
+      {/* Interactive Desk Space Difference Visualizer */}
+      <section id="desk-visualizer" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-16 scroll-mt-24">
+        <DeskSizeVisualizer
+          currentSize={selectedVariant.size}
+          onSelectSize={(newSize) => {
+            const matched = product.variants.find((v) => v.size === newSize);
+            if (matched) {
+              setSelectedVariant(matched);
+            }
+          }}
+          productImage={product.images[0]}
+        />
+      </section>
 
       {/* Sticky Mobile Add To Cart Bar */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 p-3 bg-white/95 backdrop-blur-md border-t border-[#e5e5dc] flex items-center justify-between shadow-2xl">

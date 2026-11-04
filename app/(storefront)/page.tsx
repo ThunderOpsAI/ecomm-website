@@ -18,6 +18,7 @@ import {
 } from "@/src/data/products";
 import { ProductCard } from "@/components/product-card";
 import { NewsletterForm } from "@/components/newsletter-form";
+import { CustomerReviews } from "@/components/customer-reviews";
 
 export const revalidate = 60;
 
@@ -470,96 +471,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 6. Review Section (Clearly marked placeholder showcase) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#d9381e] uppercase tracking-wider">
-              <span>Customer Feedback [Sample Showcase]</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#14161b] mt-1">
-              Battlestations Powered by MatStudio
-            </h2>
-          </div>
-          <div className="flex items-center gap-2 text-xs text-[#555a68]">
-            <div className="flex items-center text-amber-500">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-current" />
-              ))}
-            </div>
-            <span className="font-bold text-[#14161b]">4.9 out of 5</span>
-            <span className="text-[#7b8192]">(200+ Reviews)</span>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-6 rounded-2xl bg-white border border-[#e5e5dc] space-y-4 shadow-2xs">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center text-amber-500">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3.5 h-3.5 fill-current" />
-                ))}
-              </div>
-              <span className="text-[10px] text-[#7b8192] font-mono">Sample Review</span>
-            </div>
-            <h4 className="font-bold text-[#14161b] text-sm">
-              &ldquo;The stitching doesn&apos;t scrape my arm during long gaming sessions.&rdquo;
-            </h4>
-            <p className="text-xs text-[#555a68] leading-relaxed">
-              Bought the Blood Moon Pagoda 900x400. Sits dead flat right out of the box, mouse glide is
-              silky smooth, and it arrived in Melbourne in 2 days.
-            </p>
-            <div className="pt-2 border-t border-[#f0f0e8] flex items-center justify-between text-xs">
-              <span className="font-semibold text-[#14161b]">Liam K.</span>
-              <span className="text-[#7b8192]">Melbourne, VIC</span>
-            </div>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-white border border-[#e5e5dc] space-y-4 shadow-2xs">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center text-amber-500">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3.5 h-3.5 fill-current" />
-                ))}
-              </div>
-              <span className="text-[10px] text-[#7b8192] font-mono">Sample Review</span>
-            </div>
-            <h4 className="font-bold text-[#14161b] text-sm">
-              &ldquo;The 3D wrist gel pad completely saved my hand.&rdquo;
-            </h4>
-            <p className="text-xs text-[#555a68] leading-relaxed">
-              I do 8 hours of CAD modeling daily. The silicone gel mound is firm yet forgiving, not that cheap
-              sponge foam that sinks and stays compressed.
-            </p>
-            <div className="pt-2 border-t border-[#f0f0e8] flex items-center justify-between text-xs">
-              <span className="font-semibold text-[#14161b]">Mitchell K.</span>
-              <span className="text-[#7b8192]">Sydney, NSW</span>
-            </div>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-white border border-[#e5e5dc] space-y-4 shadow-2xs">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center text-amber-500">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3.5 h-3.5 fill-current" />
-                ))}
-              </div>
-              <span className="text-[10px] text-[#7b8192] font-mono">Sample Review</span>
-            </div>
-            <h4 className="font-bold text-[#14161b] text-sm">
-              &ldquo;Colors are insane and zero rubber smell.&rdquo;
-            </h4>
-            <p className="text-xs text-[#555a68] leading-relaxed">
-              The 4-Panel Super Saiyan mat looks unbelievable under warm desk lighting. Great quality and
-              really appreciate the fast regional Australian shipping.
-            </p>
-            <div className="pt-2 border-t border-[#f0f0e8] flex items-center justify-between text-xs">
-              <span className="font-semibold text-[#14161b]">Cameron B.</span>
-              <span className="text-[#7b8192]">Brisbane, QLD</span>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* 6. Dedicated Customer Reviews Component */}
+      <CustomerReviews />
 
       {/* 7. Community Gallery Strip */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
