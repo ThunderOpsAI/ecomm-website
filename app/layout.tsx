@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Shippori_Mincho } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/lib/cart-context";
 import { CartDrawer } from "@/components/cart-drawer";
@@ -13,6 +13,13 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const shipporiMincho = Shippori_Mincho({
+  variable: "--font-display",
+  weight: ["500", "700", "800"],
+  subsets: ["latin"],
+  display: "swap",
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://matstudio.com.au";
@@ -88,7 +95,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${shipporiMincho.variable} h-full antialiased`}
     >
       <head>
         <script
@@ -110,7 +117,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col font-sans bg-[#fafaf8] text-[#121418] selection:bg-[#d9381e]/15 selection:text-[#d9381e]">
+      <body className="min-h-full flex flex-col font-sans bg-cream text-text-primary selection:bg-accent/15 selection:text-accent">
         <CartProvider>
           {children}
           <CartDrawer />

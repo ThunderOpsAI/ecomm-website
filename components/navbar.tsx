@@ -8,8 +8,6 @@ import {
   Search,
   Menu,
   X,
-  Sun,
-  Moon,
   Truck,
   Sparkles,
   ChevronRight,
@@ -18,18 +16,30 @@ import { useCart } from "@/lib/cart-context";
 
 export function Navbar() {
   const pathname = usePathname();
-  const { itemCount, openCartDrawer, openSearch, theme, toggleTheme } = useCart();
+  const { itemCount, openCartDrawer, openSearch } = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isBumping, setIsBumping] = useState(false);
 
   // Elevation on scroll
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 15);
+      setScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Cart badge bump animation whenever itemCount changes
+  useEffect(() => {
+    if (itemCount === 0) return;
+    const bumpTimer = setTimeout(() => setIsBumping(true), 0);
+    const resetTimer = setTimeout(() => setIsBumping(false), 500);
+    return () => {
+      clearTimeout(bumpTimer);
+      clearTimeout(resetTimer);
+    };
+  }, [itemCount]);
 
   // Shortcut key: Cmd/Ctrl + K opens search
   useEffect(() => {
@@ -44,37 +54,57 @@ export function Navbar() {
   }, [openSearch]);
 
   const navLinks = [
-    { href: "/category/japandi", label: "Japandi Mats", badge: null },
+    { href: "/category/japandi", label: "Japandi", badge: null },
     { href: "/category/anime", label: "Anime Series", badge: "Hot" },
     { href: "/category/3d", label: "3D Ergonomic", badge: null },
-    { href: "/about", label: "Why MatStudio", badge: null },
+    { href: "/about", label: "Craft & Story", badge: null },
   ];
+
+  const isHome = pathname === "/";
+  // On home at top, make the navbar seamlessly blend with the dark ink hero
+  const isTransparentHero = isHome && !scrolled;
 
   return (
     <>
       {/* Top Aus Post Notification Bar */}
-      <div className="bg-[#f4f4ee] border-b border-[#e6e6dc] text-xs text-[#555a68] py-2 px-4 transition-colors">
+      <div
+        className={`text-xs py-2 px-4 transition-colors border-b ${
+          isTransparentHero
+            ? "bg-ink text-cream/70 border-border-dark"
+            : "bg-muted text-text-secondary border-border-subtle"
+        }`}
+      >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="flex h-2 w-2 rounded-full bg-[#d9381e] animate-pulse"></span>
-            <span className="font-semibold text-[#14161b] flex items-center gap-1.5">
-              <Truck className="w-3.5 h-3.5 text-[#d9381e]" />
+            <span className="flex h-2 w-2 rounded-full bg-accent animate-pulse"></span>
+            <span
+              className={`font-medium flex items-center gap-1.5 ${
+                isTransparentHero ? "text-cream" : "text-text-primary"
+              }`}
+            >
+              <Truck className="w-3.5 h-3.5 text-accent" />
               Australia Post Dispatch from Wangaratta, VIC
             </span>
-            <span className="hidden sm:inline text-[#c4c4b8]">|</span>
-            <span className="hidden sm:inline text-[#555a68]">
+            <span className="hidden sm:inline opacity-30">|</span>
+            <span className="hidden sm:inline">
               Free Express Shipping on orders over $60 AUD
             </span>
           </div>
-          <div className="flex items-center gap-4 text-[11px]">
+          <div className="flex items-center gap-4 text-[11px] font-mono">
             <Link
               href="/shipping"
-              className="text-[#555a68] hover:text-[#14161b] transition-colors underline-offset-2 hover:underline"
+              className="hover:underline transition-colors opacity-80 hover:opacity-100"
             >
               Shipping Policy
             </Link>
-            <span className="text-[#c4c4b8]">•</span>
-            <span className="font-semibold text-[#14161b]">AUD ($)</span>
+            <span className="opacity-30">•</span>
+            <span
+              className={`font-semibold ${
+                isTransparentHero ? "text-accent-amber" : "text-text-primary"
+              }`}
+            >
+              AUD ($)
+            </span>
           </div>
         </div>
       </div>
@@ -82,9 +112,11 @@ export function Navbar() {
       {/* Main Sticky Header */}
       <header
         className={`sticky top-0 z-40 w-full transition-all duration-300 ${
-          scrolled
-            ? "bg-white/95 backdrop-blur-md border-b border-[#e5e5dc] shadow-[0_2px_12px_rgba(0,0,0,0.04)]"
-            : "bg-white border-b border-[#ebebe3]"
+          isTransparentHero
+            ? "bg-ink/90 backdrop-blur-md border-b border-border-dark text-cream"
+            : scrolled
+            ? "bg-surface/90 backdrop-blur-md border-b border-border-subtle shadow-xs text-text-primary"
+            : "bg-surface border-b border-border-subtle text-text-primary"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -96,15 +128,22 @@ export function Navbar() {
                 className="flex items-center gap-2.5 group focus:outline-hidden"
                 aria-label="MatStudio Home"
               >
-                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#d9381e] to-[#b82e16] flex items-center justify-center shadow-xs shadow-[#d9381e]/30 group-hover:scale-105 transition-transform duration-300">
-                  <div className="w-4 h-4 rounded-xs border-2 border-white/95 transform rotate-12 group-hover:rotate-0 transition-transform duration-300"></div>
+                {/* Hanko Stamp Icon */}
+                <div className="w-8 h-8 rounded-sm bg-accent flex items-center justify-center shadow-xs shadow-accent/40 group-hover:scale-105 transition-transform duration-300">
+                  <span className="text-white font-display text-sm font-bold tracking-widest">
+                    印
+                  </span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xl sm:text-2xl font-bold tracking-tight text-[#14161b] font-mono leading-none">
-                    Mat<span className="text-[#d9381e]">Studio</span>
+                  <span
+                    className={`text-xl sm:text-2xl font-bold font-display tracking-tight leading-none ${
+                      isTransparentHero ? "text-cream" : "text-text-primary"
+                    }`}
+                  >
+                    Mat<span className="text-accent">Studio</span>
                   </span>
-                  <span className="text-[10px] tracking-widest text-[#7b8192] uppercase font-semibold mt-0.5">
-                    Desk Mats • Australia
+                  <span className="text-[9px] font-mono tracking-[0.2em] uppercase font-medium text-text-muted mt-0.5">
+                    Wangaratta • Australia
                   </span>
                 </div>
               </Link>
@@ -117,15 +156,19 @@ export function Navbar() {
                     <Link
                       key={link.href}
                       href={link.href}
-                      className={`relative px-3.5 py-2 text-sm font-medium rounded-lg transition-all duration-200 flex items-center gap-1.5 ${
-                        isActive
-                          ? "text-[#14161b] bg-[#f2f2ed] font-semibold"
-                          : "text-[#555a68] hover:text-[#14161b] hover:bg-[#f7f7f4]"
+                      className={`relative px-3.5 py-2 text-sm rounded-sm transition-all duration-200 flex items-center gap-1.5 ${
+                        isTransparentHero
+                          ? isActive
+                            ? "text-cream bg-white/10 font-semibold"
+                            : "text-cream/80 hover:text-cream hover:bg-white/5 font-medium"
+                          : isActive
+                          ? "text-text-primary bg-muted font-semibold"
+                          : "text-text-secondary hover:text-text-primary hover:bg-muted/60 font-medium"
                       }`}
                     >
                       {link.label}
                       {link.badge && (
-                        <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-full bg-[#d9381e]/10 text-[#d9381e] border border-[#d9381e]/20">
+                        <span className="text-[10px] font-mono font-bold tracking-wider px-1.5 py-0.2 rounded-xs bg-accent/20 text-accent border border-accent/30">
                           {link.badge}
                         </span>
                       )}
@@ -141,12 +184,22 @@ export function Navbar() {
               <button
                 type="button"
                 onClick={openSearch}
-                className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg border border-[#e5e5dc] bg-[#fafaf7] text-xs text-[#7b8192] hover:text-[#14161b] hover:border-[#cecec3] transition-all duration-200 shadow-2xs"
+                className={`hidden md:flex items-center gap-2.5 px-3 py-1.5 rounded-sm border text-xs transition-all duration-200 ${
+                  isTransparentHero
+                    ? "border-border-dark bg-ink-subtle text-cream/60 hover:text-cream hover:border-cream/30"
+                    : "border-border-subtle bg-cream text-text-muted hover:text-text-primary hover:border-border-hover"
+                }`}
                 aria-label="Search catalog"
               >
-                <Search className="w-3.5 h-3.5 text-[#7b8192]" />
-                <span>Search designs...</span>
-                <kbd className="hidden lg:inline-block px-1.5 py-0.5 text-[10px] font-mono bg-white border border-[#e5e5dc] rounded text-[#7b8192]">
+                <Search className="w-3.5 h-3.5 opacity-70" />
+                <span className="font-sans">Search collection...</span>
+                <kbd
+                  className={`hidden lg:inline-block px-1.5 py-0.5 text-[10px] font-mono rounded ${
+                    isTransparentHero
+                      ? "bg-ink-muted text-cream/70 border border-border-dark"
+                      : "bg-surface text-text-muted border border-border-subtle"
+                  }`}
+                >
                   ⌘K
                 </kbd>
               </button>
@@ -155,37 +208,30 @@ export function Navbar() {
               <button
                 type="button"
                 onClick={openSearch}
-                className="md:hidden p-2 rounded-lg text-[#555a68] hover:text-[#14161b] hover:bg-[#f4f4ee] transition-colors"
+                className={`md:hidden p-2 rounded-sm transition-colors ${
+                  isTransparentHero
+                    ? "text-cream/80 hover:text-cream hover:bg-white/5"
+                    : "text-text-secondary hover:text-text-primary hover:bg-muted"
+                }`}
                 aria-label="Search products"
               >
                 <Search className="w-5 h-5" />
-              </button>
-
-              {/* Theme Toggle Button */}
-              <button
-                type="button"
-                onClick={toggleTheme}
-                className="p-2 rounded-lg text-[#555a68] hover:text-[#14161b] hover:bg-[#f4f4ee] transition-colors"
-                aria-label="Toggle display theme"
-                title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-              >
-                {theme === "dark" ? (
-                  <Sun className="w-5 h-5 text-amber-500" />
-                ) : (
-                  <Moon className="w-5 h-5 text-slate-600" />
-                )}
               </button>
 
               {/* Cart Drawer Trigger */}
               <button
                 type="button"
                 onClick={openCartDrawer}
-                className="relative flex items-center gap-2 px-3.5 py-2 rounded-lg bg-[#d9381e] hover:bg-[#be2e17] active:scale-95 text-white text-sm font-semibold transition-all duration-200 shadow-xs shadow-[#d9381e]/30"
+                className="relative flex items-center gap-2 px-3.5 py-2 rounded-sm bg-accent hover:bg-accent-hover active:scale-95 text-white text-sm font-semibold transition-all duration-200 shadow-sm cursor-pointer"
                 aria-label={`View Cart, ${itemCount} items`}
               >
                 <ShoppingBag className="w-4 h-4" />
-                <span className="hidden sm:inline">Cart</span>
-                <span className="flex items-center justify-center min-w-[20px] h-5 px-1.5 text-xs font-bold rounded-full bg-white text-[#d9381e]">
+                <span className="hidden sm:inline font-sans">Cart</span>
+                <span
+                  className={`flex items-center justify-center min-w-[20px] h-5 px-1.5 text-xs font-mono font-bold rounded-xs bg-white text-accent ${
+                    isBumping ? "animate-cart-bump" : ""
+                  }`}
+                >
                   {itemCount}
                 </span>
               </button>
@@ -194,7 +240,11 @@ export function Navbar() {
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen((prev) => !prev)}
-                className="lg:hidden p-2 rounded-lg text-[#555a68] hover:text-[#14161b] hover:bg-[#f4f4ee] transition-colors"
+                className={`lg:hidden p-2 rounded-sm transition-colors ${
+                  isTransparentHero
+                    ? "text-cream/80 hover:text-cream hover:bg-white/5"
+                    : "text-text-secondary hover:text-text-primary hover:bg-muted"
+                }`}
                 aria-label="Toggle mobile menu"
               >
                 {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -205,66 +255,66 @@ export function Navbar() {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-[#e5e5dc] bg-white px-4 pt-3 pb-6 space-y-3 shadow-lg animate-in fade-in slide-in-from-top-4 duration-200">
+          <div className="lg:hidden border-t border-border-subtle bg-surface px-4 pt-3 pb-6 space-y-3 shadow-lg animate-in fade-in slide-in-from-top-4 duration-200 text-text-primary">
             <div className="space-y-1">
               <Link
                 href="/"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-[#14161b] hover:bg-[#f7f7f4]"
+                className="flex items-center justify-between px-3 py-2.5 rounded-sm text-sm font-medium hover:bg-muted"
               >
                 <span>Storefront Home</span>
-                <ChevronRight className="w-4 h-4 text-[#7b8192]" />
+                <ChevronRight className="w-4 h-4 text-text-muted" />
               </Link>
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-[#14161b] hover:bg-[#f7f7f4]"
+                  className="flex items-center justify-between px-3 py-2.5 rounded-sm text-sm font-medium hover:bg-muted"
                 >
                   <span className="flex items-center gap-2">
                     {link.label}
                     {link.badge && (
-                      <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded-full bg-[#d9381e]/10 text-[#d9381e]">
+                      <span className="text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded-xs bg-accent/15 text-accent">
                         {link.badge}
                       </span>
                     )}
                   </span>
-                  <ChevronRight className="w-4 h-4 text-[#7b8192]" />
+                  <ChevronRight className="w-4 h-4 text-text-muted" />
                 </Link>
               ))}
               <Link
                 href="/shipping"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-[#555a68] hover:text-[#14161b] hover:bg-[#f7f7f4]"
+                className="flex items-center justify-between px-3 py-2.5 rounded-sm text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-muted"
               >
                 <span>Shipping & Returns (Wangaratta, VIC)</span>
-                <ChevronRight className="w-4 h-4 text-[#7b8192]" />
+                <ChevronRight className="w-4 h-4 text-text-muted" />
               </Link>
               <Link
                 href="/faq"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-[#555a68] hover:text-[#14161b] hover:bg-[#f7f7f4]"
+                className="flex items-center justify-between px-3 py-2.5 rounded-sm text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-muted"
               >
                 <span>FAQ & Care Guide</span>
-                <ChevronRight className="w-4 h-4 text-[#7b8192]" />
+                <ChevronRight className="w-4 h-4 text-text-muted" />
               </Link>
               <Link
                 href="/contact"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-[#555a68] hover:text-[#14161b] hover:bg-[#f7f7f4]"
+                className="flex items-center justify-between px-3 py-2.5 rounded-sm text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-muted"
               >
                 <span>Contact Customer Support</span>
-                <ChevronRight className="w-4 h-4 text-[#7b8192]" />
+                <ChevronRight className="w-4 h-4 text-text-muted" />
               </Link>
             </div>
 
-            <div className="pt-2 border-t border-[#e5e5dc]">
-              <div className="p-3 rounded-xl bg-[#f7f7f4] border border-[#e5e5dc] flex items-center gap-3">
-                <Sparkles className="w-5 h-5 text-[#d9381e] shrink-0" />
+            <div className="pt-2 border-t border-border-subtle">
+              <div className="p-3 rounded-sm bg-muted border border-border-subtle flex items-center gap-3">
+                <Sparkles className="w-5 h-5 text-accent shrink-0" />
                 <div className="text-xs">
-                  <p className="font-semibold text-[#14161b]">30-Day Anti-Slip Trial</p>
-                  <p className="text-[#555a68]">
+                  <p className="font-semibold text-text-primary">30-Day Anti-Slip Trial</p>
+                  <p className="text-text-secondary">
                     100% natural vulcanized rubber guarantee on every pad.
                   </p>
                 </div>

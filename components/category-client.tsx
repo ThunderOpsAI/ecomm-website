@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 import { PRODUCTS, COLLECTIONS } from "@/src/data/products";
 import { ProductCard } from "@/components/product-card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 export interface CategoryClientProps {
   collectionKey: string;
@@ -79,44 +81,44 @@ export function CategoryClient({ collectionKey }: CategoryClientProps) {
     "Engineered with high-thread micro-woven cloth, 360° anti-fray stitched edges, and natural anti-slip rubber bases.";
 
   return (
-    <div className="min-h-screen pb-16">
+    <div className="min-h-screen pb-20 bg-cream font-sans">
       {/* Category Hero Banner */}
-      <section className="relative overflow-hidden py-12 sm:py-20 border-b border-[#e5e5dc] bg-gradient-to-b from-[#f5f5f0] via-[#fafaf7] to-[#fafaf8]">
+      <section className="relative overflow-hidden py-14 sm:py-20 border-b border-border-subtle bg-surface">
         {/* Glow ambient highlight */}
-        <div className="absolute top-0 right-1/4 w-96 h-96 rounded-full blur-3xl pointer-events-none opacity-20 bg-[#d9381e]/15" />
+        <div className="absolute top-0 right-1/4 w-96 h-96 rounded-full blur-3xl pointer-events-none opacity-20 bg-accent/15" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <nav className="flex items-center space-x-2 text-xs text-[#7b8192] mb-4">
-            <Link href="/" className="hover:text-[#14161b] transition-colors">
+          <nav className="flex items-center space-x-2 text-xs font-mono text-text-muted mb-4 uppercase tracking-wider">
+            <Link href="/" className="hover:text-text-primary transition-colors">
               Home
             </Link>
             <span>/</span>
-            <span className="text-[#555a68]">Collections</span>
+            <span className="text-text-secondary">Collections</span>
             <span>/</span>
-            <span className="text-[#14161b] font-semibold">{title}</span>
+            <span className="text-text-primary font-semibold">{title}</span>
           </nav>
 
-          <div className="max-w-3xl space-y-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-white border border-[#e5e5dc] text-[#14161b] shadow-2xs">
-              <Sparkles className="w-3.5 h-3.5 text-[#d9381e]" />
+          <div className="max-w-3xl space-y-3.5">
+            <Badge variant="vermilion" size="sm">
+              <Sparkles className="w-3.5 h-3.5 mr-1" />
               <span>{subtitle}</span>
-            </div>
+            </Badge>
 
-            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[#14161b]">
+            <h1 className="font-display text-4xl sm:text-6xl font-bold tracking-tight text-text-primary leading-[1.05]">
               {title}
             </h1>
 
-            <p className="text-sm sm:text-base text-[#555a68] leading-relaxed">
+            <p className="text-sm sm:text-base text-text-secondary leading-relaxed font-sans">
               {description}
             </p>
 
-            <div className="pt-2 flex flex-wrap items-center gap-4 text-xs text-[#7b8192]">
-              <span className="flex items-center gap-1.5 text-[#555a68] font-medium">
-                <Truck className="w-3.5 h-3.5 text-[#d9381e]" />
+            <div className="pt-2 flex flex-wrap items-center gap-4 text-xs font-mono text-text-muted">
+              <span className="flex items-center gap-1.5 text-text-secondary font-medium">
+                <Truck className="w-3.5 h-3.5 text-accent" />
                 Aus Post Dispatch from Wangaratta, VIC
               </span>
               <span>•</span>
-              <span className="text-[#7b8192] font-mono">
+              <span className="text-text-muted">
                 Showing {filteredProducts.length} designs
               </span>
             </div>
@@ -127,22 +129,22 @@ export function CategoryClient({ collectionKey }: CategoryClientProps) {
       {/* Main Filter & Product Grid Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         {/* Sticky Mobile Filter Bar */}
-        <div className="lg:hidden sticky top-16 z-30 mb-6 py-2.5 px-4 rounded-xl bg-white/95 backdrop-blur-md border border-[#e5e5dc] flex items-center justify-between shadow-sm">
+        <div className="lg:hidden sticky top-16 z-30 mb-6 py-2.5 px-4 rounded-xl bg-surface/95 backdrop-blur-md border border-border-subtle flex items-center justify-between shadow-sm">
           <button
             type="button"
             onClick={() => setMobileFiltersOpen(true)}
-            className="flex items-center gap-2 text-xs font-semibold text-[#14161b] px-3 py-1.5 rounded-lg bg-[#f2f2ed]"
+            className="flex items-center gap-2 text-xs font-semibold text-text-primary px-3 py-1.5 rounded-lg bg-muted cursor-pointer"
           >
-            <SlidersHorizontal className="w-4 h-4 text-[#d9381e]" />
+            <SlidersHorizontal className="w-4 h-4 text-accent" />
             <span>Filters ({selectedSize !== "all" ? 1 : 0})</span>
           </button>
 
           <div className="flex items-center gap-2">
-            <span className="text-xs text-[#7b8192]">{filteredProducts.length} items</span>
+            <span className="text-xs font-mono text-text-muted">{filteredProducts.length} items</span>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="text-xs bg-[#fafaf7] border border-[#e5e5dc] rounded-lg px-2.5 py-1.5 text-[#14161b] focus:outline-hidden"
+              className="text-xs bg-cream border border-border-subtle rounded-lg px-2.5 py-1.5 text-text-primary focus:outline-hidden"
             >
               <option value="featured">Featured</option>
               <option value="price-asc">Price: Low to High</option>
@@ -152,13 +154,13 @@ export function CategoryClient({ collectionKey }: CategoryClientProps) {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
           {/* Desktop Left Sidebar Filters */}
-          <aside className="hidden lg:block space-y-6">
-            <div className="p-5 rounded-2xl bg-white border border-[#e5e5dc] space-y-6 shadow-2xs">
-              <div className="flex items-center justify-between border-b border-[#f0f0e8] pb-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#14161b] flex items-center gap-2">
-                  <Filter className="w-4 h-4 text-[#d9381e]" />
+          <aside className="hidden lg:block space-y-6 sticky top-24">
+            <div className="p-5 rounded-2xl bg-surface border border-border-subtle space-y-6 shadow-2xs">
+              <div className="flex items-center justify-between border-b border-border-subtle pb-3">
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-text-primary flex items-center gap-2">
+                  <Filter className="w-4 h-4 text-accent" />
                   Filter Catalog
                 </span>
                 {(selectedSize !== "all" || maxPrice < 50) && (
@@ -168,7 +170,7 @@ export function CategoryClient({ collectionKey }: CategoryClientProps) {
                       setSelectedSize("all");
                       setMaxPrice(50);
                     }}
-                    className="text-[11px] text-[#d9381e] hover:underline font-semibold"
+                    className="text-[11px] font-mono text-accent hover:underline font-semibold cursor-pointer"
                   >
                     Reset All
                   </button>
@@ -177,36 +179,36 @@ export function CategoryClient({ collectionKey }: CategoryClientProps) {
 
               {/* Collections Navigation */}
               <div>
-                <h4 className="text-xs font-bold text-[#14161b] uppercase tracking-wider mb-2.5">
+                <h4 className="text-xs font-mono font-bold text-text-primary uppercase tracking-wider mb-2.5">
                   Collections
                 </h4>
                 <div className="space-y-1 text-xs">
                   <Link
                     href="/category/japandi"
-                    className={`block px-3 py-2 rounded-xl transition-colors ${
+                    className={`block px-3 py-2 rounded-lg transition-colors ${
                       collectionKey === "japandi"
-                        ? "bg-[#d9381e]/10 text-[#d9381e] font-semibold"
-                        : "text-[#555a68] hover:text-[#14161b] hover:bg-[#f7f7f4]"
+                        ? "bg-accent/10 text-accent font-semibold"
+                        : "text-text-secondary hover:text-text-primary hover:bg-muted"
                     }`}
                   >
                     Japandi Mats (4)
                   </Link>
                   <Link
                     href="/category/anime"
-                    className={`block px-3 py-2 rounded-xl transition-colors ${
+                    className={`block px-3 py-2 rounded-lg transition-colors ${
                       collectionKey === "anime"
-                        ? "bg-[#d9381e]/10 text-[#d9381e] font-semibold"
-                        : "text-[#555a68] hover:text-[#14161b] hover:bg-[#f7f7f4]"
+                        ? "bg-accent/10 text-accent font-semibold"
+                        : "text-text-secondary hover:text-text-primary hover:bg-muted"
                     }`}
                   >
                     Anime Series (4)
                   </Link>
                   <Link
                     href="/category/3d"
-                    className={`block px-3 py-2 rounded-xl transition-colors ${
+                    className={`block px-3 py-2 rounded-lg transition-colors ${
                       collectionKey === "3d"
-                        ? "bg-[#d9381e]/10 text-[#d9381e] font-semibold"
-                        : "text-[#555a68] hover:text-[#14161b] hover:bg-[#f7f7f4]"
+                        ? "bg-accent/10 text-accent font-semibold"
+                        : "text-text-secondary hover:text-text-primary hover:bg-muted"
                     }`}
                   >
                     3D Ergonomic (4)
@@ -216,10 +218,10 @@ export function CategoryClient({ collectionKey }: CategoryClientProps) {
 
               {/* Size Selector */}
               <div>
-                <h4 className="text-xs font-bold text-[#14161b] uppercase tracking-wider mb-2.5">
+                <h4 className="text-xs font-mono font-bold text-text-primary uppercase tracking-wider mb-2.5">
                   Size & Dimensions
                 </h4>
-                <div className="space-y-1.5 text-xs">
+                <div className="space-y-1.5 text-xs font-mono">
                   {[
                     { id: "all", label: "All Sizes" },
                     { id: "900", label: "Large Desk Mat (400×900mm)" },
@@ -230,15 +232,15 @@ export function CategoryClient({ collectionKey }: CategoryClientProps) {
                       key={option.id}
                       type="button"
                       onClick={() => setSelectedSize(option.id)}
-                      className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-left transition-colors ${
+                      className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-left transition-colors cursor-pointer ${
                         selectedSize === option.id
-                          ? "bg-[#f2f2ed] text-[#14161b] font-semibold border border-[#e5e5dc]"
-                          : "text-[#555a68] hover:text-[#14161b] hover:bg-[#f7f7f4]"
+                          ? "bg-muted text-text-primary font-semibold border border-border-subtle"
+                          : "text-text-secondary hover:text-text-primary hover:bg-muted/50"
                       }`}
                     >
                       <span>{option.label}</span>
                       {selectedSize === option.id && (
-                        <Check className="w-3.5 h-3.5 text-[#d9381e]" />
+                        <Check className="w-3.5 h-3.5 text-accent" />
                       )}
                     </button>
                   ))}
@@ -247,11 +249,11 @@ export function CategoryClient({ collectionKey }: CategoryClientProps) {
 
               {/* Price Filter */}
               <div>
-                <div className="flex items-center justify-between text-xs mb-2">
-                  <h4 className="font-bold text-[#14161b] uppercase tracking-wider">
+                <div className="flex items-center justify-between text-xs mb-2 font-mono">
+                  <h4 className="font-bold text-text-primary uppercase tracking-wider">
                     Max Price
                   </h4>
-                  <span className="font-mono font-bold text-[#d9381e]">
+                  <span className="font-bold text-accent font-display text-sm">
                     ${maxPrice}.00 AUD
                   </span>
                 </div>
@@ -262,9 +264,9 @@ export function CategoryClient({ collectionKey }: CategoryClientProps) {
                   step="1"
                   value={maxPrice}
                   onChange={(e) => setMaxPrice(Number(e.target.value))}
-                  className="w-full accent-[#d9381e] bg-[#e5e5dc] h-1.5 rounded-lg cursor-pointer"
+                  className="w-full accent-accent bg-border-subtle h-1.5 rounded-lg cursor-pointer"
                 />
-                <div className="flex justify-between text-[10px] text-[#7b8192] mt-1 font-mono">
+                <div className="flex justify-between text-[10px] text-text-muted mt-1 font-mono">
                   <span>$25 AUD</span>
                   <span>$50 AUD</span>
                 </div>
@@ -272,12 +274,12 @@ export function CategoryClient({ collectionKey }: CategoryClientProps) {
             </div>
 
             {/* Aus Post Guarantee Box */}
-            <div className="p-4 rounded-2xl bg-[#fafaf7] border border-[#e5e5dc] space-y-2">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#14161b]">
-                <Truck className="w-4 h-4 text-[#d9381e]" />
+            <div className="p-4 rounded-xl bg-surface border border-border-subtle space-y-2">
+              <div className="flex items-center gap-2 text-xs font-mono font-bold text-text-primary">
+                <Truck className="w-4 h-4 text-accent" />
                 <span>Australia Post Direct</span>
               </div>
-              <p className="text-[11px] text-[#555a68] leading-relaxed">
+              <p className="text-[11px] text-text-secondary leading-relaxed font-sans">
                 All mats are inspected and rolled in heavy protective packaging in Wangaratta, VIC before dispatch.
               </p>
             </div>
@@ -286,20 +288,20 @@ export function CategoryClient({ collectionKey }: CategoryClientProps) {
           {/* Right Product Grid Area */}
           <main className="lg:col-span-3 space-y-6">
             {/* Desktop Top Bar: Count & Sorting */}
-            <div className="hidden lg:flex items-center justify-between p-4 rounded-2xl bg-white border border-[#e5e5dc] shadow-2xs">
-              <span className="text-xs font-medium text-[#555a68]">
-                Showing <strong className="text-[#14161b]">{filteredProducts.length}</strong> products
+            <div className="hidden lg:flex items-center justify-between p-4 rounded-xl bg-surface border border-border-subtle shadow-2xs">
+              <span className="text-xs font-medium text-text-secondary font-mono">
+                Showing <strong className="text-text-primary">{filteredProducts.length}</strong> designs
               </span>
 
               <div className="flex items-center gap-3">
-                <span className="text-xs text-[#7b8192] flex items-center gap-1">
+                <span className="text-xs text-text-muted flex items-center gap-1 font-mono">
                   <ArrowUpDown className="w-3 h-3" />
                   Sort By:
                 </span>
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="text-xs bg-[#fafaf7] border border-[#e5e5dc] rounded-xl px-3 py-1.5 text-[#14161b] focus:outline-hidden focus:border-[#d9381e]"
+                  className="text-xs bg-cream border border-border-subtle rounded-lg px-3 py-1.5 text-text-primary focus:outline-hidden focus:border-accent"
                 >
                   <option value="featured">Featured Picks</option>
                   <option value="price-asc">Price: Low to High</option>
@@ -312,26 +314,28 @@ export function CategoryClient({ collectionKey }: CategoryClientProps) {
 
             {/* Empty State or Product Cards */}
             {filteredProducts.length === 0 ? (
-              <div className="p-12 text-center rounded-2xl bg-white border border-[#e5e5dc] space-y-4 shadow-2xs">
-                <div className="w-14 h-14 rounded-full bg-[#f4f4ee] border border-[#e5e5dc] flex items-center justify-center mx-auto text-[#7b8192]">
+              <div className="p-12 text-center rounded-2xl bg-surface border border-border-subtle space-y-4 shadow-2xs">
+                <div className="w-14 h-14 rounded-full bg-muted border border-border-subtle flex items-center justify-center mx-auto text-text-muted">
                   <Filter className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="text-base font-bold text-[#14161b]">No matching desk mats found</h3>
-                  <p className="text-xs text-[#555a68] mt-1">
+                  <h3 className="font-display text-lg font-bold text-text-primary">
+                    No matching desk mats found
+                  </h3>
+                  <p className="text-xs text-text-secondary mt-1">
                     Try raising the max price slider or selecting &ldquo;All Sizes&rdquo;.
                   </p>
                 </div>
-                <button
-                  type="button"
+                <Button
+                  variant="primary"
+                  size="sm"
                   onClick={() => {
                     setSelectedSize("all");
                     setMaxPrice(50);
                   }}
-                  className="px-4 py-2 rounded-xl bg-[#d9381e] text-white text-xs font-semibold shadow-2xs"
                 >
                   Reset Filters
-                </button>
+                </Button>
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -346,22 +350,22 @@ export function CategoryClient({ collectionKey }: CategoryClientProps) {
 
       {/* Mobile Filters Modal Dialog */}
       {mobileFiltersOpen && (
-        <div className="fixed inset-0 z-50 flex justify-end">
+        <div className="fixed inset-0 z-50 flex justify-end font-sans">
           <div
-            className="fixed inset-0 bg-stone-900/40 backdrop-blur-xs"
+            className="fixed inset-0 bg-ink/50 backdrop-blur-xs"
             onClick={() => setMobileFiltersOpen(false)}
           />
-          <div className="relative w-full max-w-xs bg-white border-l border-[#e5e5dc] p-5 flex flex-col justify-between overflow-y-auto z-10 shadow-2xl">
+          <div className="relative w-full max-w-xs bg-surface border-l border-border-subtle p-5 flex flex-col justify-between overflow-y-auto z-10 shadow-2xl">
             <div className="space-y-6">
-              <div className="flex items-center justify-between border-b border-[#e5e5dc] pb-3">
-                <h3 className="text-base font-bold text-[#14161b] flex items-center gap-2">
-                  <SlidersHorizontal className="w-4 h-4 text-[#d9381e]" />
+              <div className="flex items-center justify-between border-b border-border-subtle pb-3">
+                <h3 className="font-display text-base font-bold text-text-primary flex items-center gap-2">
+                  <SlidersHorizontal className="w-4 h-4 text-accent" />
                   Filters
                 </h3>
                 <button
                   type="button"
                   onClick={() => setMobileFiltersOpen(false)}
-                  className="p-1 text-[#7b8192] hover:text-[#14161b]"
+                  className="p-1 text-text-muted hover:text-text-primary cursor-pointer"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -369,26 +373,26 @@ export function CategoryClient({ collectionKey }: CategoryClientProps) {
 
               {/* Collections Mobile */}
               <div>
-                <h4 className="text-xs font-bold uppercase text-[#7b8192] mb-2">Collection</h4>
+                <h4 className="text-xs font-mono font-bold uppercase text-text-muted mb-2">Collection</h4>
                 <div className="space-y-1 text-xs">
                   <Link
                     href="/category/japandi"
                     onClick={() => setMobileFiltersOpen(false)}
-                    className="block px-3 py-2 rounded-xl bg-[#fafaf7] border border-[#e5e5dc] text-[#14161b]"
+                    className="block px-3 py-2 rounded-lg bg-cream border border-border-subtle text-text-primary"
                   >
                     Japandi Mats
                   </Link>
                   <Link
                     href="/category/anime"
                     onClick={() => setMobileFiltersOpen(false)}
-                    className="block px-3 py-2 rounded-xl bg-[#fafaf7] border border-[#e5e5dc] text-[#14161b]"
+                    className="block px-3 py-2 rounded-lg bg-cream border border-border-subtle text-text-primary"
                   >
                     Anime Series
                   </Link>
                   <Link
                     href="/category/3d"
                     onClick={() => setMobileFiltersOpen(false)}
-                    className="block px-3 py-2 rounded-xl bg-[#fafaf7] border border-[#e5e5dc] text-[#14161b]"
+                    className="block px-3 py-2 rounded-lg bg-cream border border-border-subtle text-text-primary"
                   >
                     3D Ergonomic
                   </Link>
@@ -397,8 +401,8 @@ export function CategoryClient({ collectionKey }: CategoryClientProps) {
 
               {/* Size Selector Mobile */}
               <div>
-                <h4 className="text-xs font-bold uppercase text-[#7b8192] mb-2">Size</h4>
-                <div className="space-y-1 text-xs">
+                <h4 className="text-xs font-mono font-bold uppercase text-text-muted mb-2">Size</h4>
+                <div className="space-y-1 text-xs font-mono">
                   {[
                     { id: "all", label: "All Sizes" },
                     { id: "900", label: "Large (400×900mm)" },
@@ -409,14 +413,14 @@ export function CategoryClient({ collectionKey }: CategoryClientProps) {
                       key={option.id}
                       type="button"
                       onClick={() => setSelectedSize(option.id)}
-                      className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-left border ${
+                      className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-left border cursor-pointer ${
                         selectedSize === option.id
-                          ? "bg-[#d9381e]/10 border-[#d9381e]/30 text-[#d9381e] font-semibold"
-                          : "text-[#555a68] bg-[#fafaf7] border-[#e5e5dc]"
+                          ? "bg-accent/10 border-accent/30 text-accent font-semibold"
+                          : "text-text-secondary bg-cream border-border-subtle"
                       }`}
                     >
                       <span>{option.label}</span>
-                      {selectedSize === option.id && <Check className="w-3.5 h-3.5 text-[#d9381e]" />}
+                      {selectedSize === option.id && <Check className="w-3.5 h-3.5 text-accent" />}
                     </button>
                   ))}
                 </div>
@@ -424,9 +428,9 @@ export function CategoryClient({ collectionKey }: CategoryClientProps) {
 
               {/* Price Filter Mobile */}
               <div>
-                <div className="flex justify-between text-xs mb-2">
-                  <span className="font-bold uppercase text-[#7b8192]">Max Price</span>
-                  <span className="font-mono text-[#d9381e] font-bold">${maxPrice} AUD</span>
+                <div className="flex justify-between text-xs mb-2 font-mono">
+                  <span className="font-bold uppercase text-text-muted">Max Price</span>
+                  <span className="text-accent font-bold">${maxPrice} AUD</span>
                 </div>
                 <input
                   type="range"
@@ -435,18 +439,19 @@ export function CategoryClient({ collectionKey }: CategoryClientProps) {
                   step="1"
                   value={maxPrice}
                   onChange={(e) => setMaxPrice(Number(e.target.value))}
-                  className="w-full accent-[#d9381e]"
+                  className="w-full accent-accent"
                 />
               </div>
             </div>
 
-            <button
-              type="button"
+            <Button
+              variant="primary"
+              size="md"
               onClick={() => setMobileFiltersOpen(false)}
-              className="mt-6 w-full py-3 rounded-xl bg-[#d9381e] text-white text-xs font-bold shadow-xs shadow-[#d9381e]/25"
+              className="mt-6 w-full"
             >
               Apply Filters ({filteredProducts.length} items)
-            </button>
+            </Button>
           </div>
         </div>
       )}

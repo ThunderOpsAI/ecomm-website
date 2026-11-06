@@ -5,9 +5,12 @@ import {
   Truck,
   Sparkles,
   Layers,
+  ArrowRight,
 } from "lucide-react";
-
 import type { Metadata } from "next";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { SectionHeader } from "@/components/ui/section-header";
 
 export const metadata: Metadata = {
   title: "Why MatStudio | About Our Australian Desk Surface Brand",
@@ -40,17 +43,17 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="pb-20 space-y-16 sm:space-y-24">
+    <div className="pb-24 space-y-16 sm:space-y-24 bg-cream font-sans">
       {/* Hero Banner */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#f5f5f0] via-[#fafaf7] to-[#fafaf8] py-16 sm:py-24 border-b border-[#e5e5dc]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white border border-[#e5e5dc] text-[#d9381e] inline-block shadow-2xs">
+      <section className="relative overflow-hidden bg-ink text-cream py-16 sm:py-24 border-b border-border-dark bg-grain-dark">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4 relative z-10">
+          <Badge variant="vermilion" size="sm">
             Our Origin Story
-          </span>
-          <h1 className="text-3xl sm:text-5xl font-extrabold text-[#14161b] tracking-tight">
+          </Badge>
+          <h1 className="font-display text-4xl sm:text-6xl font-bold tracking-tight text-cream leading-[1.05]">
             Built for Gamers Who Care About Every Millimeter.
           </h1>
-          <p className="text-sm sm:text-base text-[#555a68] max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base text-cream/70 max-w-2xl mx-auto leading-relaxed">
             MatStudio was born out of frustration with flimsy, cheap mousepads that fray after two months
             and reek of petroleum rubber. We set out to engineer the gold standard in desk surfaces.
           </p>
@@ -61,11 +64,11 @@ export default function AboutPage() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Story Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-          <div className="space-y-4 text-xs sm:text-sm text-[#555a68] leading-relaxed">
-            <span className="text-xs font-bold text-[#d9381e] uppercase tracking-wider">
+          <div className="space-y-4 text-xs sm:text-sm text-text-secondary leading-relaxed">
+            <span className="font-mono text-xs font-bold text-accent uppercase tracking-widest">
               From Wangaratta, Victoria
             </span>
-            <h2 className="text-2xl font-bold text-[#14161b]">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-text-primary">
               The Problem with Mass-Market Mousepads
             </h2>
             <p>
@@ -80,64 +83,72 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="rounded-3xl overflow-hidden bg-white border border-[#e5e5dc] p-4 shadow-sm">
+          <div className="rounded-2xl overflow-hidden bg-surface border border-border-subtle p-3 shadow-xs">
             <img
               src="/images/products/japandi/blood-moon-pagoda/lifestyle.jpeg"
               alt="MatStudio desk mat in aesthetic setup"
-              className="rounded-2xl w-full h-auto object-cover"
+              className="rounded-xl w-full h-auto object-cover"
             />
           </div>
         </div>
 
         {/* 4 Pillars of MatStudio */}
-        <div className="space-y-6">
-          <div className="text-center max-w-xl mx-auto">
-            <h3 className="text-xl sm:text-2xl font-bold text-[#14161b]">The 4 MatStudio Standards</h3>
-            <p className="text-xs text-[#7b8192] mt-1">
-              Every pad dispatched from our Victorian fulfillment hub meets strict benchmarks.
-            </p>
-          </div>
+        <div className="space-y-8">
+          <SectionHeader
+            align="center"
+            eyebrow="Integrity"
+            title="The 4 MatStudio Standards"
+            description="Every pad dispatched from our Victorian fulfillment hub meets strict benchmarks."
+          />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="p-6 rounded-2xl bg-white border border-[#e5e5dc] space-y-3 shadow-2xs">
-              <div className="w-10 h-10 rounded-xl bg-[#d9381e]/10 text-[#d9381e] flex items-center justify-center">
+            <div className="p-6 rounded-xl bg-surface border border-border-subtle space-y-3 shadow-2xs">
+              <div className="w-10 h-10 rounded-sm bg-accent/10 text-accent flex items-center justify-center">
                 <Layers className="w-5 h-5" />
               </div>
-              <h4 className="font-bold text-[#14161b] text-base">Micro-Woven Glide Surface</h4>
-              <p className="text-xs text-[#555a68] leading-relaxed">
+              <h4 className="font-display font-bold text-text-primary text-lg">
+                Micro-Woven Glide Surface
+              </h4>
+              <p className="text-xs text-text-secondary leading-relaxed font-sans">
                 Tightly spun polyester threads provide uniform X and Y axis friction, ensuring mouse movements
                 feel completely predictable regardless of swipe direction.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-white border border-[#e5e5dc] space-y-3 shadow-2xs">
-              <div className="w-10 h-10 rounded-xl bg-[#d9381e]/10 text-[#d9381e] flex items-center justify-center">
+            <div className="p-6 rounded-xl bg-surface border border-border-subtle space-y-3 shadow-2xs">
+              <div className="w-10 h-10 rounded-sm bg-accent/10 text-accent flex items-center justify-center">
                 <ShieldCheck className="w-5 h-5" />
               </div>
-              <h4 className="font-bold text-[#14161b] text-base">100% Natural Tree Rubber</h4>
-              <p className="text-xs text-[#555a68] leading-relaxed">
+              <h4 className="font-display font-bold text-text-primary text-lg">
+                100% Natural Tree Rubber
+              </h4>
+              <p className="text-xs text-text-secondary leading-relaxed font-sans">
                 We refuse to use synthetic EVA foam or cheap PVC. Our heavy natural rubber base has zero toxic
                 petroleum odor and clings tenaciously to all desk finishes.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-white border border-[#e5e5dc] space-y-3 shadow-2xs">
-              <div className="w-10 h-10 rounded-xl bg-[#d9381e]/10 text-[#d9381e] flex items-center justify-center">
+            <div className="p-6 rounded-xl bg-surface border border-border-subtle space-y-3 shadow-2xs">
+              <div className="w-10 h-10 rounded-sm bg-accent/10 text-accent flex items-center justify-center">
                 <Sparkles className="w-5 h-5" />
               </div>
-              <h4 className="font-bold text-[#14161b] text-base">Sub-Surface Anti-Fray Border</h4>
-              <p className="text-xs text-[#555a68] leading-relaxed">
+              <h4 className="font-display font-bold text-text-primary text-lg">
+                Sub-Surface Anti-Fray Border
+              </h4>
+              <p className="text-xs text-text-secondary leading-relaxed font-sans">
                 5-thread lockstitch sewing binds the edge below pad height. Your forearm glides over the seam
                 without catching, eliminating skin irritation during long gaming sessions.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-white border border-[#e5e5dc] space-y-3 shadow-2xs">
-              <div className="w-10 h-10 rounded-xl bg-[#d9381e]/10 text-[#d9381e] flex items-center justify-center">
+            <div className="p-6 rounded-xl bg-surface border border-border-subtle space-y-3 shadow-2xs">
+              <div className="w-10 h-10 rounded-sm bg-accent/10 text-accent flex items-center justify-center">
                 <Truck className="w-5 h-5" />
               </div>
-              <h4 className="font-bold text-[#14161b] text-base">Local Australian Dispatch</h4>
-              <p className="text-xs text-[#555a68] leading-relaxed">
+              <h4 className="font-display font-bold text-text-primary text-lg">
+                Local Australian Dispatch
+              </h4>
+              <p className="text-xs text-text-secondary leading-relaxed font-sans">
                 No drop-shipping from overseas factories with 4-week transit times. Every order is inspected,
                 tube-packaged, and dispatched via Australia Post from Wangaratta, VIC.
               </p>
@@ -145,24 +156,32 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* CTA */}
-        <div className="p-8 rounded-3xl bg-gradient-to-br from-[#f8f8f5] to-white border border-[#e5e5dc] text-center space-y-4 shadow-sm">
-          <h3 className="text-xl sm:text-2xl font-bold text-[#14161b]">Ready to elevate your setup?</h3>
-          <p className="text-xs sm:text-sm text-[#555a68] max-w-md mx-auto">
+        {/* CTA Card */}
+        <div className="p-8 sm:p-12 rounded-3xl bg-ink text-cream border border-border-dark text-center space-y-4 shadow-xl bg-grain-dark">
+          <Badge variant="amber" size="sm">
+            Risk-Free Guarantee
+          </Badge>
+          <h3 className="font-display text-2xl sm:text-3xl font-bold text-cream">
+            Ready to elevate your setup?
+          </h3>
+          <p className="text-xs sm:text-sm text-cream/70 max-w-md mx-auto leading-relaxed">
             Explore our curated 12-piece launch collection with 30-day anti-slip risk-free trial.
           </p>
-          <div className="pt-2 flex justify-center gap-3">
-            <Link
-              href="/category/japandi"
-              className="px-6 py-3 rounded-xl bg-[#d9381e] hover:bg-[#be2e17] text-white font-bold text-xs shadow-xs"
-            >
-              Browse Japandi Collection
+          <div className="pt-2 flex flex-col sm:flex-row justify-center gap-3">
+            <Link href="/category/japandi">
+              <Button variant="primary" size="md">
+                <span>Browse Japandi Collection</span>
+                <ArrowRight className="w-3.5 h-3.5 ml-1" />
+              </Button>
             </Link>
-            <Link
-              href="/category/anime"
-              className="px-6 py-3 rounded-xl border border-[#e5e5dc] bg-white hover:bg-[#f2f2ed] text-[#14161b] font-semibold text-xs shadow-2xs"
-            >
-              Browse Anime Series
+            <Link href="/category/anime">
+              <Button
+                variant="outline"
+                size="md"
+                className="bg-ink-subtle text-cream border-border-dark hover:bg-ink-muted"
+              >
+                Browse Anime Series
+              </Button>
             </Link>
           </div>
         </div>

@@ -2,6 +2,8 @@ import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FAQAccordion, FAQCategory } from "@/components/faq-accordion";
+import { Button } from "@/components/ui/button";
+import { SectionHeader } from "@/components/ui/section-header";
 
 export const metadata: Metadata = {
   title: "FAQ & Care Guide | Mouse Pad Cleaning & Dispatch Advice",
@@ -116,39 +118,36 @@ export default function FAQPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 space-y-12">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 space-y-12 bg-cream font-sans">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      <div className="space-y-3 border-b border-[#e5e5dc] pb-6">
-        <span className="text-xs font-semibold text-[#d9381e] uppercase tracking-wider">
-          Help & Guidance
-        </span>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-[#14161b]">
-          Frequently Asked Questions
-        </h1>
-        <p className="text-sm text-[#555a68]">
-          Everything you need to know about materials, sizing, cleaning, and Australian dispatch.
-        </p>
+      <div className="border-b border-border-subtle pb-6">
+        <SectionHeader
+          eyebrow="Help & Guidance"
+          title="Frequently Asked Questions"
+          description="Everything you need to know about materials, sizing, cleaning, and Australian dispatch."
+        />
       </div>
 
       <FAQAccordion categories={FAQ_CATEGORIES} />
 
       {/* Still need help CTA */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#f8f8f5] to-white border border-[#e5e5dc] flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
+      <div className="p-6 sm:p-8 rounded-2xl bg-surface border border-border-subtle flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
         <div>
-          <h3 className="font-bold text-[#14161b] text-base">Have a question not listed here?</h3>
-          <p className="text-xs text-[#555a68] mt-1">
+          <h3 className="font-display font-bold text-text-primary text-base">
+            Have a question not listed here?
+          </h3>
+          <p className="text-xs text-text-secondary mt-1">
             Our Australian support team is based in Victoria and responds within 24 hours.
           </p>
         </div>
-        <Link
-          href="/contact"
-          className="px-5 py-2.5 rounded-xl bg-[#d9381e] text-white font-bold text-xs shrink-0 hover:bg-[#be2e17] transition-colors shadow-2xs"
-        >
-          Contact Customer Care
+        <Link href="/contact">
+          <Button variant="primary" size="md" className="shrink-0">
+            Contact Studio
+          </Button>
         </Link>
       </div>
     </div>
